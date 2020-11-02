@@ -8,7 +8,6 @@ int main(void) {
 
   while (1) {
     _delay_ms(1000);
-    PORTB = PORTB ^ (1 << PB0);
     PORTB = PORTB ^ (1 << PB1);
   }
 }
