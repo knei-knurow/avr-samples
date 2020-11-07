@@ -1,20 +1,20 @@
-program: flash
-	gcc main.o message.o -o program
+validate:
+	if [ -z $(FILE) ]; then								\
+		printf "error: file not entered\n";	\
+		exit 1;															\
+	fi;																		\
+	make flash
 
-# main.o: $(FILE).c
-#	gcc -c main.c
+flash: $(FILE).hex
+	avrdude -c usbasp -p m8 -e -U flash:w:$(FILE).hex
 
-$(FILE).c:
-	printf "lol\n"
+$(FILE).hex: $(FILE).elf
+	avr-objcopy -j .text -j .data -O ihex $(FILE).elf $(FILE).hex
 
-elf: $(FILE).c
-	cd src && avr-gcc -mmcu=atmega8 -Wall -Os -o $(FILE).elf $(FILE).c -DF_CPU=1000000UL
 
-hex: elf
-	cd src && avr-objcopy -j .text -j .data -O ihex $(FILE).elf $(FILE).hex
+$(FILE).elf: $(FILE).c
+	avr-gcc -mmcu=atmega8 -Wall -Os -o $(FILE).elf $(FILE).c -DF_CPU=1000000UL
 
-flash: hex
-	cd src && avrdude -c usbasp -p m8 -e -U flash:w:$(FILE).hex
 
 clean:
-	cd src && rm -rf *.hex *.elf *.o
+	rm -rf *.hex *.elf *.o
