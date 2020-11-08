@@ -1,5 +1,9 @@
 # Running the code
 
+The fast & easy way: just wire everything up properly, connect the MCU to
+the PC using a USBasp programmer, and `make FILE=<filename>`, where `<filename>`
+is the name of the C file you want to compile & flash.
+
 ### Compile
 
 `DF_CPU=1000000UL` sets `F_CPU` to 1MHz
