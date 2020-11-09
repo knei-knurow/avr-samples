@@ -2,14 +2,14 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define FOSC 1843200					// System oscillator clock frequency (Hz).
-#define BAUD 9600						// Baud rate in bits per second (bps).
-#define MY_UBRR FOSC / 16 / BAUD - 1			// UART Baud Rate Register.
+#define FOSC 1843200                  // System oscillator clock frequency (Hz).
+#define BAUD 9600                     // Baud rate in bits per second (bps).
+#define MY_UBRR FOSC / 16 / BAUD - 1  // UART Baud Rate Register.
 
 void usart_init(unsigned int ubrr) {
   // Set baud rate.
-  UBRRH = (unsigned char)(ubrr >> 8);
-  UBRRL = (unsigned char)(ubrr);
+  UBRRH = (uint8_t)(ubrr >> 8);
+  UBRRL = (uint8_t)(ubrr);
   // UBRRH = USART Baud Rate Register High.
   // UBRRL = USART Baud Rate Register Low.
 
@@ -28,7 +28,7 @@ void usart_init(unsigned int ubrr) {
   // USZ0 = USART Character Size.
 }
 
-inline void usart_transmit(unsigned char data) {
+void usart_transmit(uint8_t data) {
   // Wait for empty transmit buffer.
   while (!(UCSRA & (1 << UDRE))) {
   };
@@ -43,9 +43,14 @@ inline void usart_transmit(unsigned char data) {
 int main(void) {
   usart_init(MY_UBRR);
   while (1) {
-    for (int i = 0; i < 4; i++) {
-      _delay_ms(1000);
-      usart_transmit(0b11111111);
-    }
+    uint8_t data = 0b00000001;
+    usart_transmit(data);
+    _delay_ms(1000);
+
+    // for (int i = 0; i < 4; i++) {
+    //   data = data << 1;
+    //   usart_transmit(data);
+    //   _delay_ms(1000);
+    // }
   }
 }
