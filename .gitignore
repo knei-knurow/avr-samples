@@ -7,3 +7,4 @@
 *.hex
 .vs/
 Debug/
+*.componentinfo.xml

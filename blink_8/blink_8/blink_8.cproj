@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>blink</AssemblyName>
-    <Name>blink</Name>
-    <RootNamespace>blink</RootNamespace>
+    <AssemblyName>blink_8</AssemblyName>
+    <Name>blink_8</Name>
+    <RootNamespace>blink_8</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -118,14 +118,14 @@
         <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
       </AvrGcc>
     </ToolchainSettings>
-    <UsesExternalMakeFile>False</UsesExternalMakeFile>
-    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <BuildTarget>blink.hex</BuildTarget>
+    <UsesExternalMakeFile>True</UsesExternalMakeFile>
+    <OutputDirectory>C:\Users\barti\dev\avr\avrcode\blink_8\blink_8</OutputDirectory>
+    <BuildTarget>blink_8.hex</BuildTarget>
     <CleanTarget>clean</CleanTarget>
-    <ExternalMakeFilePath>C:\Users\barti\dev\avr\avrcode\blink\blink\Makefile</ExternalMakeFilePath>
+    <ExternalMakeFilePath>C:\Users\barti\dev\avr\avrcode\blink_8\blink_8\Makefile</ExternalMakeFilePath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="blink.c">
+    <Compile Include="blink_8.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
