@@ -60,12 +60,13 @@ uint8_t usart_receive(void) {
 }
 
 int main(void) {
-	usart_init(1);
+	usart_init(MY_UBRR);
 	
 	while (1) {
 		// PORTB = PORTB ^ (1 << PB0);
-		// usart_transmit(usart_receive());
+		usart_transmit(usart_receive());
 		
+		/*
 		// Wait for empty transmit buffer.
 		while (!(UCSRA & (1 << UDRE))) {
 		};
@@ -79,5 +80,6 @@ int main(void) {
 		
 		PORTB = PORTB ^ (1 << PB1);
 		_delay_ms(500);
+		*/
 	}
 }

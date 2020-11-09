@@ -2,9 +2,9 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-const long int FOSC = 1843200;  // System oscilator clock frequency (Hz).
-const long int BAUD = 9600;     // Baud rate in bits per second (bps).
-const long int MY_UBRR = (FOSC / (16 * BAUD)) - 1;  // UART Baud Rate Register.
+#define FOSC 1843200					// System oscillator clock frequency (Hz).
+#define BAUD 9600						// Baud rate in bits per second (bps).
+#define MY_UBRR FOSC / 16 / BAUD - 1			// UART Baud Rate Register.
 
 void usart_init(unsigned int ubrr) {
   // Set baud rate.
@@ -20,7 +20,7 @@ void usart_init(unsigned int ubrr) {
   // TXEN = Transmitter Enabled.
 
   // Set frame format: 1 stop bit, 8 data bits.
-  UCSRC = (1 << URSEL) | (0 << USBS) | (3 << UCSZ0);
+  UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
   // UCSRC = (1 << URSEL) | (1 << USBS) | (1 << UCSZ0) | (1 << UCSZ1);
   // UCSRC = USART Control and Status Register C.
   // URSEL = USART Register Select.
@@ -40,17 +40,12 @@ inline void usart_transmit(unsigned char data) {
   // UDR = USART Data Register.
 }
 
-unsigned char usart_receive(void) {
-  // TODO
-  return '0';
-}
-
 int main(void) {
   usart_init(MY_UBRR);
   while (1) {
     for (int i = 0; i < 4; i++) {
       _delay_ms(1000);
-      usart_transmit(0b0001100001);
+      usart_transmit(0b11111111);
     }
   }
 }
