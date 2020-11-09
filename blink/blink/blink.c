@@ -1,10 +1,10 @@
-﻿#define __AVR_ATmega8A__
+#define __AVR_ATmega8A__
 #include <avr/io.h>
 #include <util/delay.h>
 
 int main(void) {
   DDRB = DDRB | (1 << PB1);
-  // DDRB = Data Direction Register for port B. 
+  // DDRB = Data Direction Register for port B.
   // Setting PIN1 on PORTB to 1. 1 means it is an output pin.
 
   while (1) {

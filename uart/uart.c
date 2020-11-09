@@ -28,7 +28,7 @@ void usart_init(unsigned int ubrr) {
   // USZ0 = USART Character Size.
 }
 
-void usart_transmit(unsigned char data) {
+inline void usart_transmit(unsigned char data) {
   // Wait for empty transmit buffer.
   while (!(UCSRA & (1 << UDRE))) {
   };
