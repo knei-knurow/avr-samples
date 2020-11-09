@@ -5,3 +5,5 @@
 *.exe
 *.elf
 *.hex
+.vs/
+Debug/
