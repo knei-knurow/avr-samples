@@ -1,6 +1,7 @@
-.vscode
+.DS_Store
+.vscode/
+.idea/
 *.out
 *.exe
-.DS_Store
 *.elf
 *.hex

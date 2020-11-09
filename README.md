@@ -1,40 +1,97 @@
-# Running the code
+> work in progress
 
-The fast & easy way: just wire everything up properly, connect the MCU to
-the PC using a USBasp programmer, and `make FILE=<filename>`, where `<filename>`
-is the name of the C file you want to compile & flash.
+# AVR for beginners
+
+This repository is intended to contain detailed instructions on how to
+get started with programming Atmel AVR microcontrollers. It also contains
+a bunch of thoroughly documented and explained example projects.
+
+Recommended websites:
+
+- http://mikrokontrolery.blogspot.com/p/spis-tresci.html (in Polish)
+
+### Running the code
+
+This repository contains several folders. Each of those folders is
+a self-contained project that can be opened either in Atmel Studio
+or VS Code.
+
+The fast & easy way to get started: wire everything up properly, connect
+the MCU to your PC using a USBasp programmer,
+
+0. Wire up your circuit correctly on the breadboard.
+1. Connect the MCU to your PC using a USBasp programmer
+2. `cd <on of the project>`, for example `cd blink`
+3. `make flash`
+
+# What Makefiles do, explained
 
 ### Compile
 
-`DF_CPU=1000000UL` sets `F_CPU` to 1MHz
+First, you need to compile a C source file to an .elf object file.
 
 `avr-gcc -mmcu=atmega8 -Wall -Os -o blink.elf blink.c -DF_CPU=1000000UL `
 
-### Link / copy objects ??? idk
+> `DF_CPU=1000000UL` sets `F_CPU` to 1MHz.
+
+### Convert .elf to .hex
+
+To flash the MCU using USBasp programmer, you need a .hex file. It can be
+created out of the .elf file you generated in the previous step.
 
 `avr-objcopy -j .text -j .data -O ihex blink.elf blink.hex`
 
 ### Flash
 
+Now it's time to run the code
+
 `avrdude -c usbasp -p m8 -e -U flash:w:blink.hex`
 
-# Editor setup (VS Code)
+# Setup with VSCode
 
-To make IntelliSense detect AVR header files, make the editor aware of them.
+## MacOS
 
-E.g if you installed `avr-gcc` using Homebrew, do:
+First things first: you need [Homebrew](https://brew.sh).
 
-`homebrew ls avr-gcc`
+1. Install avrdude - a small program used to flash AVR microcontrollers.
 
-it should print sth like this (among others):
+   `brew install avrdude`
 
-/usr/local/Cellar/avr-gcc/9.3.0/avr/include/
-...
+2. Install avr-gcc - AVR-flavor of [GNU GCC](https://gcc.gnu.org)
 
-now that `/usr/local/Cellar/avr-gcc/9.3.0/avr/include/` is the line that should be added to `<project_root>/.vscode/settings.json`
+   `brew tap osx-cross/avr`
+
+   `brew install avr-gcc`
+
+3. Install a [C/C++ Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) for VSCode
+
+4. To make VSCode's IntelliSense detect AVR header files, make the editor aware of them.
+   For this, you'll need to know the exact version of your `avr-gcc` installation:
+   `brew ls avr-gcc`
+
+It prints a list which contains:
+
+```
+/usr/local/Cellar/avr-gcc/<version>/avr/include/
+```
+
+Copy that line, replacing <version> with your version.
+
+Now, in project root, create a `.vscode` folder. In it, create `settings.json`
+file with the following content:
 
 ```json
 "C_Cpp.default.systemIncludePath": [
-    "/usr/local/Cellar/avr-gcc/9.3.0/avr/include"
+    "/usr/local/Cellar/avr-gcc/<version>/avr/include"
   ]
 ```
+
+Voilà, IntelliSense should work now.
+
+## Windows
+
+coming soon
+
+# Setup with Atmel Studio (only on Windows)
+
+coming soon
