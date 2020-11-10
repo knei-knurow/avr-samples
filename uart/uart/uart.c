@@ -1,10 +1,13 @@
+/**
+ * This program transmits a single frame on TX every 1 second.
+ */
+
 #define __AVR_ATmega8A__
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define FOSC 1843200                  // System oscillator clock frequency (Hz).
 #define BAUD 9600                     // Baud rate in bits per second (bps).
-#define MY_UBRR FOSC / 16 / BAUD - 1  // UART Baud Rate Register.
+#define MY_UBRR F_CPU / 8 / BAUD - 1  // UART Baud Rate Register.
 
 void usart_init(unsigned int ubrr) {
   // Set baud rate.
@@ -18,6 +21,9 @@ void usart_init(unsigned int ubrr) {
   // UCSRB = USART Control and Status Register B.
   // RXEN = Receiver Enabled.
   // TXEN = Transmitter Enabled.
+
+  // Double the USART transmission speed.
+  UCSRA = (1 << U2X);
 
   // Set frame format: 1 stop bit, 8 data bits.
   UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
@@ -44,13 +50,11 @@ int main(void) {
   usart_init(MY_UBRR);
   while (1) {
     uint8_t data = 0b00000001;
-    usart_transmit(data);
-    _delay_ms(1000);
 
-    // for (int i = 0; i < 4; i++) {
-    //   data = data << 1;
-    //   usart_transmit(data);
-    //   _delay_ms(1000);
-    // }
+    for (int i = 0; i < 4; i++) {
+      _delay_ms(1000);
+      usart_transmit(data);
+      data = data << 1;
+    }
   }
 }
