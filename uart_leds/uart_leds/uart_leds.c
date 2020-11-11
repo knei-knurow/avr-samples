@@ -1,4 +1,5 @@
 #define __AVR_ATmega8A__
+#include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -10,22 +11,14 @@ void usart_init(unsigned int ubrr) {
   UBRRH = (uint8_t)(ubrr >> 8);
   UBRRL = (uint8_t)(ubrr);
 
-  // Enable receiver and transmitter.
-  UCSRB = (1 << RXEN) | (1 << TXEN);
+  // Enable receiver, transmitter, and receive interrupts.
+  UCSRB = (1 << RXEN) | (1 << TXEN) | (1 << RXCIE);
 
   // Double the USART transmission speed.
   UCSRA = (1 << U2X);
 
   // Set frame format: 1 stop bit, 8 data bits.
   UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
-}
-
-void usart_transmit(uint8_t data) {
-  // Wait for empty transmit buffer.
-  while (!(UCSRA & (1 << UDRE))) {
-  }
-
-  UDR = data;
 }
 
 uint8_t usart_receive(void) {
@@ -35,19 +28,25 @@ uint8_t usart_receive(void) {
   return UDR;
 }
 
+ISR(USART_RXC_vect) {
+  // Read a single byte from USART Data Register.
+  uint8_t mask = UDR;
+
+  DDRB = DDRB ^ mask;
+}
+
 int main(void) {
   usart_init(MY_UBRR);
+
+  // Enable interrupts.
+  sei();
   DDRB = 0xFF;
-  PORTB = 0xFF;
 
   while (1) {
-    // From interrupt.
-    uint8_t mask = usart_receive();
-    DDRB = DDRB ^ mask;
-
-    // PORTB = 1;
-    // for (int i = 0; i < 8; i++) {
-    //   PORTB = PORTB << 1;
-    // }
+    PORTB = 1;
+    for (int i = 0; i < 8; i++) {
+      _delay_ms(500);
+      PORTB = PORTB << 1;
+    }
   }
 }
