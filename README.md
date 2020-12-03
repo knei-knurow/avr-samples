@@ -17,7 +17,7 @@ a self-contained project that can be opened either in Atmel Studio
 or VS Code.
 
 The fast & easy way to get started: wire everything up properly, connect
-the MCU to your PC using a USBasp programmer,
+the MCU (micro-controller unit) to your PC using a [USBasp](https://www.fischl.de/usbasp) programmer.
 
 0. Wire up your circuit correctly on the breadboard.
 1. Connect the MCU to your PC using a USBasp programmer
@@ -49,7 +49,7 @@ Now it's time to run the code
 
 # Setup with VSCode
 
-## MacOS
+## macOS
 
 First things first: you need [Homebrew](https://brew.sh).
 
