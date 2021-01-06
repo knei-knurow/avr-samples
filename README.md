@@ -53,11 +53,11 @@ Now it's time to run the code
 
 First things first: you need [Homebrew](https://brew.sh).
 
-1. Install avrdude - a small program used to flash AVR microcontrollers.
+1. Install `avrdude` - a small program used to flash AVR microcontrollers.
 
    `brew install avrdude`
 
-2. Install avr-gcc - AVR-flavor of [GNU GCC](https://gcc.gnu.org)
+2. Install `avr-gcc` - an AVR-flavor of [GNU GCC](https://gcc.gnu.org)
 
    `brew tap osx-cross/avr`
 
@@ -80,18 +80,23 @@ Copy that line, replacing <version> with your version.
 Now, in project root, create a `.vscode` folder. In it, create `settings.json`
 file with the following content:
 
+Example (for avr-gcc v9.3.0 and using headers for ATmega8A)
+
 ```json
-"C_Cpp.default.systemIncludePath": [
-    "/usr/local/Cellar/avr-gcc/<version>/avr/include"
-  ]
+{
+  "C_Cpp.default.includePath": [" /usr/local/Cellar/avr-gcc/9.3.0/avr/include/"],
+  "C_Cpp.default.defines": ["__AVR_ATmega8A__"]
+}
 ```
 
 Voilà, IntelliSense should work now.
 
 ## Windows
 
-coming soon
+coming soon (or never)
+
+you can as well just use WSL
 
 # Setup with Atmel Studio (only on Windows)
 
-coming soon
+coming soon (or never)
