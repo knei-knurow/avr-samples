@@ -2,7 +2,6 @@
  * This program transmits a single frame on TX every 1 second.
  */
 
-#define __AVR_ATmega8A__
 #include <avr/io.h>
 #include <util/delay.h>
 

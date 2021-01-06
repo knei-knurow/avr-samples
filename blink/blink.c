@@ -1,4 +1,3 @@
-#define __AVR_ATmega8A__
 #include <avr/io.h>
 #include <util/delay.h>
 

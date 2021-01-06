@@ -2,7 +2,6 @@
  * This program listens for a byte on RX and responds with the byte on TX.
  */
 
-#define __AVR_ATmega8A__
 #include <avr/io.h>
 #include <util/delay.h>
 
