@@ -1,6 +1,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
-#include "HD44780.h"
+#include "../libraries/hd44780/HD44780.h"
 
 int main(void) {
   DDRB = 0b11111111;  // set all pins to OUT

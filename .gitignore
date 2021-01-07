@@ -1,6 +1,8 @@
 .DS_Store
 .vscode/
 .idea/
+*.a
+*.o
 *.out
 *.exe
 *.elf
