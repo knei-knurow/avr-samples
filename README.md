@@ -53,11 +53,11 @@ Now it's time to run the code
 
 First things first: you need [Homebrew](https://brew.sh).
 
-1. Install `avrdude` - a small program used to flash AVR microcontrollers.
+1. Install [`avrdude`](https://www.nongnu.org/avrdude) - a small program used to flash AVR microcontrollers
 
    `brew install avrdude`
 
-2. Install `avr-gcc` - an AVR-flavor of [GNU GCC](https://gcc.gnu.org)
+2. Install [`avr-gcc`](https://gcc.gnu.org/wiki/avr-gcc) - an AVR-flavor of [GNU GCC](https://gcc.gnu.org)
 
    `brew tap osx-cross/avr`
 
@@ -84,7 +84,7 @@ Example (for avr-gcc v9.3.0 and using headers for ATmega8A)
 
 ```json
 {
-  "C_Cpp.default.includePath": [" /usr/local/Cellar/avr-gcc/9.3.0/avr/include/"],
+  "C_Cpp.default.includePath": [" /usr/local/Cellar/avr-gcc@9/9.3.0_2/avr/include/"],
   "C_Cpp.default.defines": ["__AVR_ATmega8A__"]
 }
 ```
@@ -93,10 +93,51 @@ Voilà, IntelliSense should work now.
 
 ## Windows
 
-coming soon (or never)
+1. Install `avr-gcc` - an AVR-flavor of [GNU GCC](https://gcc.gnu.org).
+   [This version](https://blog.zakkemble.net/avr-gcc-builds) (which we recommend ) contains
+   also `avrdude`, `make` and a couple other GNU tools, so you won't have to install them
+   separately. Install it to your home directory (e.g `C:\Users\Bartek`) so that it'll be easy
+   to find - in our case, it's `C:\Users\Bartek\avr-gcc`
 
-you can as well just use WSL
+2. Add the location where you installed `avr-gcc` to `$PATH` ([how to add items to path on Windows?](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable))
 
-# Setup with Atmel Studio (only on Windows)
+3. Install a [C/C++ Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) for VSCode
 
-coming soon (or never)
+4. To make VSCode's IntelliSense detect AVR header files, make the editor aware of them.
+   For this, you'll need to know the exact location of your `avr-gcc` installation. In our case
+   it was `C:\Users\Bartek\avr-gcc`. To that location, we need append `\bin`, like
+   this: `C:\Users\Bartek\avr-gcc\bin`
+
+Example (using headers for ATmega8A)
+
+**.vscode/settings.json**
+
+```json
+{
+  "C_Cpp.default.includePath": ["C:\\Users\\Bartek\\avr-gcc\\avr\\include"],
+  "C_Cpp.default.defines": ["__AVR_ATmega8A__"]
+}
+```
+
+This is almost enough, but chances are, if you use `sei()` or `ISR` functions for interrupts,
+your IntelliSense will show errors. To fix them, create a new file named `c_cpp_properties.json`
+in `.vscode` directory in this project's root with the following content:
+
+**.vscode/c_cpp_properties.json**
+
+```json
+{
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": ["${default}"],
+      "cStandard": "c99",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x64"
+    }
+  ],
+  "version": 4
+}
+```
+
+Voilà, IntelliSense should work just fine.
