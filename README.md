@@ -141,3 +141,7 @@ in `.vscode` directory in this project's root with the following content:
 ```
 
 Voilà, IntelliSense should work just fine.
+
+### Used resources
+
+- https://izzudinhafizprojects.wordpress.com/2021/04/05/setting-up-visual-studio-code-vscode-for-avr-programming-not-arduino/
