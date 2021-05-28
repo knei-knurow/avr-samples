@@ -1,16 +1,10 @@
-> work in progress
-
-# AVR for beginners
+# avr-samples
 
 This repository is intended to contain detailed instructions on how to
 get started with programming Atmel AVR microcontrollers. It also contains
 a bunch of thoroughly documented and explained example projects.
 
-Recommended websites:
-
-- http://mikrokontrolery.blogspot.com/p/spis-tresci.html (in Polish)
-
-### Running the code
+## Running the code
 
 This repository contains several folders. Each of those folders is
 a self-contained project that can be opened either in Atmel Studio
@@ -24,9 +18,9 @@ the MCU (micro-controller unit) to your PC using a [USBasp](https://www.fischl.d
 2. `cd <on of the project>`, for example `cd blink`
 3. `make flash`
 
-# What Makefiles do, explained
+## What Makefiles do, explained
 
-### Compile
+### Compile .c files
 
 First, you need to compile a C source file to an .elf object file.
 
@@ -34,7 +28,7 @@ First, you need to compile a C source file to an .elf object file.
 
 > `DF_CPU=1000000UL` sets `F_CPU` to 1MHz.
 
-### Convert .elf to .hex
+### Convert .elf files to .hex files
 
 To flash the MCU using USBasp programmer, you need a .hex file. It can be
 created out of the .elf file you generated in the previous step.
@@ -142,6 +136,19 @@ in `.vscode` directory in this project's root with the following content:
 
 Voilà, IntelliSense should work just fine.
 
-### Used resources
+# Useful resources
 
-- https://izzudinhafizprojects.wordpress.com/2021/04/05/setting-up-visual-studio-code-vscode-for-avr-programming-not-arduino/
+- [mikrokontrolery.blogspot.com by dondu](http://mikrokontrolery.blogspot.com/p/spis-tresci.html)
+
+- [ATmega8 datasheet by dondu](http://mikrokontrolery.blogspot.com/p/spis-tresci.html)
+
+- [ATmega328p datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf)
+
+- [Setting up VSCode for AVR development](https://izzudinhafizprojects.wordpress.com/2021/04/05/setting-up-visual-studio-code-vscode-for-avr-programming-not-arduino)
+
+- [avr-libc manual](http://www.elec.canterbury.ac.nz/intranet/dsl/p30-avr/doc-include/avr-libc/avr-libc-user-manual-1.6.1.pdf)
+
+  A bit old but this stuff doesn't change very often.
+  Useful sections:
+
+  - 6.36 Compiling and linking
